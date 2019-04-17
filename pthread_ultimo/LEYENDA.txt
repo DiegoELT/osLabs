@@ -1,0 +1,72 @@
+
+El siguiente cuadro describe los programas de la carpeta pthread_ultimo
+
+Programa     	 |  Descripcion
+-----------------|---------------------------------------- 
+hola.c 		   Hola simple en manera secuencial
+
+holas.c	           Crea 2 hilos: hilo0 e hilo1, y cada hilo ejecuta
+	           la funcion *printHola()
+
+holas_varios.c	   Crea 8 hilos: hilo0,1,2..7 y cada hilo ejecuta la 
+		   funcion *printHola()
+
+holas_arreglo.c	   Crea NUM_HILOS, pero utiliza una estructura for
+		   en vez de estar creandolos por separadaos como
+		   el program holas. Todos los hilos correr la funcion
+		   *printHola()
+
+holas_join.c	   Crea NUM_HILOS de manera joinable, despues de crear
+		   los hilos en main() llama a la funcion pthread_join()
+		   que va a esperar que todos los hilos culminen antes
+		   de continuar
+
+holas_hilos_completo. Tiene las mismas funciones que holas_join.c, pero 
+		    anade un barrera de sincronizacion; espera que todos 
+		    los hilos hayan llegado hasta la funcion *printHola
+		    antes de continuar.Cada hilo que llega va incrementando
+		    la variable contador_hilos en 1, al llegar todos los hilos 
+	 	    contador_hilos es NUM_HILOS y puede salir del do-while. 
+		    Utiliza variable de exclusion mutua a manera que ningun 
+		    otro hilo pueda ingresar a la variable contador_hilos
+		    al mismo tiempo
+
+arreglo_seq.c	   Este programa crea le pregunta al usuario cuantos elementos
+		   va a tener el arreglo, luego alloca en la memoria dinamica
+		   este arreglo llamando a la funcion allocar_arreglo(), luego 
+		   llena esta arreglo de numeros al azar llamando a la funcion 
+		   llenar_arreglo(). Finalmente llama la funcion calcular_suma()
+		   que calcula la suma de todos los elementos del arreglo. 
+		   Se utiliza la funcion gettimeofday() para tomar el tiempo. 
+
+arreglo_suma_J.c   Este programa paraleliza el programa arreglo_seq.c haciendo 
+		   que los hilos sean joinables, y reparte el rango de elementos
+		   del arreglo que trabajara cada hilo. No hay variables de exclusion
+		   mutua.
+
+arreglo_mutex.c	   Este programa anade al program arreglo_suma_J.c la variable 
+		   de exclusion mutua que permite que solamente un hilo pueda
+		   ingresar a la variable suma_total. Utiliza la funcion 
+		   pthread_mutex_lock() y pthread_mutex_unlock() para ganar
+		   el candado. 
+
+arreglo_mutex_sinc.c Este programa hace lo mismo que arreglo_mutex.c pero anade
+		     sincronismo, ningun hilo va a empezar a realizar la suma
+		     parcial del rango del arreglo que le corresponde hasta que
+		     todos los hilos hayan llegado a esa barrera.
+
+arreglo_paralelo_time.c  Este programa hace lo mismo que arreglo_mutex_sinc.c pero 
+			 tambien anade clock para medir cuanto tiempo se demora en la
+			 ejecucion del mismo. 
+
+
+*Para medir el desempeno del programa podemos cambiar el numero de hilos que va 
+a trabajar cada programa y el tamano del arreglo cuando le pregunta al usuario. 
+
+
+
+
+
+
+
+
